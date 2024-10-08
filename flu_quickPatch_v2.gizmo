@@ -1,0 +1,289 @@
+set cut_paste_input [stack 0]
+version 13.0 v10
+push $cut_paste_input
+Group {
+ name flu_quickPatch
+ tile_color 0xeb9907ff
+ label "ref frame: \[value firstFrame]"
+ note_font_size 15
+ selected true
+ xpos 4522
+ ypos 4628
+ addUserKnob {20 setup}
+ addUserKnob {4 prjType l "Projection Type" M {"Project 3D" "UV Project"}}
+ addUserKnob {41 first_frame l "projected frame" t "which frame is used for projection" +INVISIBLE T FrameHold1.first_frame}
+ addUserKnob {4 type l "projection type" M {track stabilize animated}}
+ addUserKnob {6 generateDeep l "generate deep" t "generates deep output for holdouts" -STARTLINE}
+ addUserKnob {6 invertZ l "invert Z" -STARTLINE}
+ invertZ true
+ addUserKnob {26 ""}
+ addUserKnob {41 format l "output format" T Reformat13.format}
+ addUserKnob {41 firstFrame l "reference frame" T FrameHold1.firstFrame}
+ addUserKnob {41 setToCurrentFrame l "Set to Current Frame" T FrameHold1.setToCurrentFrame}
+ addUserKnob {20 render l "render settings" n 1}
+ render 0
+ addUserKnob {26 _1 l ScanlineRender}
+ addUserKnob {41 filter T ScanlineRender10.filter}
+ addUserKnob {41 antialiasing T ScanlineRender10.antialiasing}
+ addUserKnob {41 overscan T ScanlineRender10.overscan}
+ addUserKnob {26 _2 l "" +STARTLINE}
+ addUserKnob {3 sampleGui l "samples: gui" t "samples in script"}
+ sampleGui 1
+ addUserKnob {3 sampleFarm l farm t "samples on render farm" -STARTLINE}
+ sampleFarm 1
+ addUserKnob {41 shutter T ScanlineRender10.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T ScanlineRender10.shutteroffset}
+ addUserKnob {26 ""}
+ addUserKnob {41 motion_vectors_type l "motion vectors" T ScanlineRender10.motion_vectors_type}
+ addUserKnob {41 MB_channel l "motion vector channels" T ScanlineRender10.MB_channel}
+ addUserKnob {26 ""}
+ addUserKnob {41 output_shader_vectors l "output vectors" T ScanlineRender10.output_shader_vectors}
+ addUserKnob {41 P_channel l "surface point" T ScanlineRender10.P_channel}
+ addUserKnob {41 N_channel l "surface normal" T ScanlineRender10.N_channel}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 _3 l "" +STARTLINE}
+ addUserKnob {26 _4 l "" +STARTLINE}
+ addUserKnob {26 info l "" +STARTLINE T "flu_quickPatch_V2 - 09.2023\ninfo@falk-lude.de"}
+ addUserKnob {20 project3D}
+ addUserKnob {41 project_on l "project on" T Project3D1.project_on}
+ addUserKnob {41 crop T Project3D1.crop}
+ addUserKnob {41 occlusion_mode l "occlusion mode" T Project3D1.occlusion_mode}
+ addUserKnob {20 uvProject}
+ addUserKnob {41 display T UVProject1.display}
+ addUserKnob {41 selectable T UVProject1.selectable}
+ addUserKnob {41 render_mode l render T UVProject1.render_mode}
+ addUserKnob {41 geo_select T UVProject1.geo_select}
+ addUserKnob {41 projection T UVProject1.projection}
+ addUserKnob {41 plane T UVProject1.plane}
+ addUserKnob {41 project_on_1 l "project on" T UVProject1.project_on}
+ addUserKnob {41 frustum_culling l "view frustum culling" T UVProject1.frustum_culling}
+ addUserKnob {41 u_invert l "invert u" T UVProject1.u_invert}
+ addUserKnob {41 v_invert l "invert v" T UVProject1.v_invert}
+ addUserKnob {41 u_scale l "u scale" T UVProject1.u_scale}
+ addUserKnob {41 v_scale l "v scale" T UVProject1.v_scale}
+ addUserKnob {41 uv_attrib_name l "attrib name" T UVProject1.uv_attrib_name}
+ addUserKnob {20 deep_1 l deep}
+ addUserKnob {41 premult l premultiplied T DeepFromImage1.premult}
+ addUserKnob {41 keepZeroAlpha l "keep zero alpha" -STARTLINE T DeepFromImage1.keepZeroAlpha}
+ addUserKnob {41 set_z l "specify z" -STARTLINE T DeepFromImage1.set_z}
+ addUserKnob {41 z T DeepFromImage1.z}
+}
+ Input {
+  inputs 0
+  name cam
+  label cam
+  xpos -305
+  ypos -663
+ }
+ Dot {
+  name Dot7
+  xpos -271
+  ypos -596
+ }
+set N31425400 [stack 0]
+ FrameHold {
+  firstFrame 1001
+  name FrameHold1
+  xpos -305
+  ypos -555
+  disable {{type==2?1:0}}
+ }
+ Dot {
+  name Dot10
+  xpos -271
+  ypos -488
+ }
+set N758a800 [stack 0]
+ Dot {
+  name Dot11
+  xpos -423
+  ypos -488
+ }
+ Dot {
+  name Dot12
+  xpos -423
+  ypos -340
+ }
+push $N31425400
+ Dot {
+  name Dot8
+  xpos -527
+  ypos -596
+ }
+ Dot {
+  name Dot9
+  xpos -527
+  ypos -439
+ }
+set N72075400 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.type}}
+  name Switch_stab1
+  label "\[value which]"
+  xpos -561
+  ypos -352
+ }
+ Dot {
+  name Dot71
+  xpos -527
+  ypos -28
+ }
+push $N72075400
+push $N758a800
+ Switch {
+  inputs 2
+  which {{parent.type}}
+  name Switch_stab
+  label "\[value which]"
+  xpos -305
+  ypos -451
+ }
+ Dot {
+  name Dot2
+  xpos -271
+  ypos -380
+ }
+set N7c14fc00 [stack 0]
+ Dot {
+  name Dot5
+  xpos -271
+  ypos -320
+ }
+ Input {
+  inputs 0
+  name img
+  label img
+  xpos -6
+  ypos -616
+  number 1
+ }
+ Dot {
+  name Dot1
+  xpos 28
+  ypos -506
+ }
+set N1ead4800 [stack 0]
+push $N7c14fc00
+push $N1ead4800
+ Project3D2 {
+  inputs 2
+  crop false
+  name Project3D1
+  xpos -94
+  ypos -383
+ }
+ Switch {
+  inputs 2
+  which {{parent.prjType}}
+  name Switch1
+  xpos 83
+  ypos -383
+ }
+ Input {
+  inputs 0
+  name geo
+  label geo
+  xpos 286
+  ypos -392
+  number 2
+ }
+ Dot {
+  name Dot3
+  xpos 320
+  ypos -320
+ }
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial1
+  xpos 83
+  ypos -323
+ }
+set N733a0400 [stack 0]
+ UVProject {
+  inputs 2
+  name UVProject1
+  xpos -100
+  ypos -323
+ }
+push $N733a0400
+ Dot {
+  name Dot6
+  xpos 117
+  ypos -237
+ }
+ Switch {
+  inputs 2
+  which {{parent.Switch1.which}}
+  name Switch2
+  xpos -100
+  ypos -240
+ }
+ Reformat {
+  inputs 0
+  resize none
+  name Reformat13
+  xpos 87
+  ypos -32
+ }
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  samples {{"\$gui?sampleGui:sampleFarm"}}
+  shutteroffset centred
+  motion_vectors_type off
+  name ScanlineRender10
+  xpos -100
+  ypos -32
+ }
+ Dot {
+  name Dot13
+  xpos -66
+  ypos 32
+ }
+set N10e62400 [stack 0]
+ Dot {
+  name Dot14
+  xpos 81
+  ypos 32
+ }
+ DeepFromImage {
+  name DeepFromImage1
+  xpos 47
+  ypos 160
+ }
+ Dot {
+  name Dot15
+  xpos 81
+  ypos 269
+ }
+push $N10e62400
+ Expression {
+  channel3 {none none none depth.Z}
+  expr3 "z?1/z * a:0"
+  name Expression1
+  label 1/Z
+  xpos -100
+  ypos 93
+  disable {{!parent.invertZ}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.generateDeep}}
+  name deepSwitch
+  label "\[value which]"
+  selected true
+  xpos -100
+  ypos 257
+ }
+ Dot {
+  name Dot4
+  xpos -66
+  ypos 391
+ }
+ Output {
+  name Output1
+  xpos -100
+  ypos 447
+ }
+end_group

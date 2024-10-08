@@ -1,0 +1,136 @@
+ #! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+Group {
+name flu_edgeExtend
+addUserKnob {20 setup}
+addUserKnob {41 size l blur T EdgeBlur1.size}
+addUserKnob {41 white l "uv strength" T Grade6.white}
+addUserKnob {41 uv_scale l "UV scale" T IDistort1.uv_scale}
+addUserKnob {26 "" +STARTLINE}
+addUserKnob {26 txt l "" +STARTLINE T "edge extend via iDistort\nhttp://therenderblog.com/extend-edges-with-idistort-in-nuke/"}
+}
+Input {
+inputs 0
+name Input1
+xpos 840
+ypos 520
+}
+EdgeBlur {
+size 4
+name EdgeBlur1
+xpos 840
+ypos 560
+}
+Dot {
+name Dot9
+xpos 874
+ypos 730
+}
+set N6df3c00 [stack 0]
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name Shuffle4
+label "\[value in] to \[value out]"
+xpos 942
+ypos 720
+}
+Dot {
+name Dot11
+xpos 1099
+ypos 730
+}
+set N6df3800 [stack 0]
+Dot {
+name Dot10
+xpos 1300
+ypos 730
+}
+set N6df2400 [stack 0]
+Matrix {
+channels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+matrix {
+    {0 1 0}
+    {0 -1 0}
+    {0 0 0}
+  }
+name Matrix2
+xpos 1266
+ypos 966
+}
+push $N6df3800
+Matrix {
+channels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+matrix {
+    {0 0 0}
+    {0 -1 1}
+    {0 0 0}
+  }
+name Matrix1
+xpos 1065
+ypos 869
+}
+push $N6df2400
+Shuffle {
+red black
+green black
+blue black
+alpha black
+name Shuffle3
+label "\[value in] to \[value out]"
+xpos 1468
+ypos 720
+}
+Copy {
+inputs 2
+from0 rgba.red
+to0 rgba.red
+name Copy2
+xpos 1468
+ypos 863
+}
+Copy {
+inputs 2
+from0 rgba.green
+to0 rgba.green
+name Copy3
+xpos 1468
+ypos 960
+}
+Grade {
+white 200
+black_clamp false
+name Grade6
+xpos 1468
+ypos 1046
+}
+push $N6df3c00
+Dot {
+name Dot12
+xpos 874
+ypos 1198
+}
+Copy {
+inputs 2
+from0 rgba.red
+to0 forward.u
+from1 rgba.green
+to1 forward.v
+name Copy4
+xpos 1468
+ypos 1181
+}
+IDistort {
+uv motion
+uv_scale 0.1
+name IDistort1
+xpos 1468
+ypos 1332
+}
+Output {
+name Output1
+xpos 1468
+ypos 1432
+}
+end_group
